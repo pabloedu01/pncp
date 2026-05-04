@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:15.6
+    container_name: pncp_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pncp
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pncp_web
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

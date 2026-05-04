@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Controle de Obras</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="flex items-center justify-center h-screen bg-muted">
+
+    <div class="card" id="auth-container">
+        <div class="text-center mb-4">
+            <h2>Bem-vindo</h2>
+            <p class="text-muted" id="form-subtitle">Faça login para continuar</p>
+        </div>
+
+        <div id="alert-box" class="alert alert-error hidden"></div>
+
+        <!-- Formulário de Login -->
+        <form id="login-form">
+            <div class="form-group">
+                <label class="form-label" for="login-email">Email</label>
+                <input type="email" id="login-email" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="login-password">Senha</label>
+                <input type="password" id="login-password" class="form-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+            <div class="mt-4 text-center flex flex-col gap-2">
+                <a href="#" id="show-forgot-password" class="text-muted">Esqueci minha senha</a>
+                <a href="#" id="show-register" class="text-muted">Não tem uma conta? Cadastre-se</a>
+            </div>
+        </form>
+
+        <!-- Formulário Esqueci a Senha -->
+        <form id="forgot-password-form" class="hidden">
+            <p class="text-muted mb-4 text-center">Informe seu e-mail e enviaremos um token de recuperação.</p>
+            <div class="form-group">
+                <label class="form-label" for="forgot-email">Email</label>
+                <input type="email" id="forgot-email" class="form-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar E-mail</button>
+            <div class="mt-4 text-center">
+                <a href="#" class="show-login-link text-muted">Voltar ao Login</a>
+            </div>
+        </form>
+
+        <!-- Formulário Redefinir Senha -->
+        <form id="reset-password-form" class="hidden">
+            <p class="text-muted mb-4 text-center">Insira o token recebido e sua nova senha.</p>
+            <div class="form-group">
+                <label class="form-label" for="reset-token">Token de Recuperação</label>
+                <input type="text" id="reset-token" class="form-input text-center" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="reset-password">Nova Senha</label>
+                <input type="password" id="reset-password" class="form-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Redefinir Senha</button>
+            <div class="mt-4 text-center">
+                <a href="#" class="show-login-link text-muted">Voltar ao Login</a>
+            </div>
+        </form>
+
+        <!-- Formulário de Cadastro -->
+        <form id="register-form" class="hidden">
+            <div class="form-group">
+                <label class="form-label" for="reg-email">Email</label>
+                <input type="email" id="reg-email" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="reg-cpf">CPF</label>
+                <input type="text" id="reg-cpf" class="form-input" maxlength="14" placeholder="000.000.000-00" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="reg-password">Senha</label>
+                <input type="password" id="reg-password" class="form-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <div class="mt-4 text-center">
+                <a href="#" class="show-login-link text-muted">Já tem uma conta? Faça login</a>
+            </div>
+        </form>
+
+        <!-- Verificação 2FA (Para login) -->
+        <div id="tfa-verify-container" class="hidden">
+            <p class="text-muted mb-4">Insira o código gerado no seu aplicativo autenticador.</p>
+            <form id="tfa-verify-form">
+                <div class="form-group">
+                    <label class="form-label" for="tfa-code">Código 2FA</label>
+                    <input type="text" id="tfa-code" class="form-input text-center" maxlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Verificar</button>
+                <div class="mt-4 text-center">
+                    <a href="#" id="show-lost-2fa" class="text-muted">Perdi meu autenticador</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Formulário Perdi 2FA -->
+        <form id="lost-2fa-form" class="hidden">
+            <p class="text-muted mb-4 text-center">Perdeu o acesso ao seu autenticador? Enviaremos um código de recuperação para o seu e-mail.</p>
+            <button type="submit" class="btn btn-primary">Enviar código de recuperação</button>
+            <div class="mt-4 text-center">
+                <a href="#" class="show-login-link text-muted">Voltar ao Login</a>
+            </div>
+        </form>
+
+        <!-- Formulário Resetar 2FA -->
+        <form id="reset-lost-2fa-form" class="hidden">
+            <p class="text-muted mb-4 text-center">Insira o código numérico de 6 dígitos enviado para o seu e-mail.</p>
+            <div class="form-group">
+                <label class="form-label" for="reset-2fa-code">Código de Recuperação</label>
+                <input type="text" id="reset-2fa-code" class="form-input text-center" maxlength="6" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Validar Código</button>
+            <div class="mt-4 text-center">
+                <a href="#" class="show-login-link text-muted">Voltar ao Login</a>
+            </div>
+        </form>
+
+        <!-- Setup 2FA (Para após cadastro) -->
+        <div id="tfa-setup-container" class="hidden text-center">
+            <p class="text-muted mb-4">Escaneie o QR Code abaixo com seu Google Authenticator.</p>
+            <img id="tfa-qrcode" src="" alt="QR Code" class="mb-4" style="max-width: 200px; margin: 0 auto;">
+            <p class="text-muted mb-4">Código manual: <strong id="tfa-secret"></strong></p>
+            <button id="btn-tfa-done" class="btn btn-primary">Ir para o Login</button>
+        </div>
+    </div>
+
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>

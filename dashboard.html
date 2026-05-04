@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Controle de Obras</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container flex justify-between items-center">
+            <h2>Controle de Obras</h2>
+            <div class="flex gap-4 items-center">
+                <span id="user-info" class="text-muted"></span>
+                <button id="btn-logout" class="btn btn-outline" style="width: auto;">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="flex gap-4">
+            <!-- Formulário Nova Prefeitura -->
+            <div class="card" style="max-width: 350px; height: fit-content;">
+                <h3>Nova Prefeitura</h3>
+                <p class="text-muted mb-4">Cadastre uma nova entidade</p>
+                
+                <div id="alert-box" class="alert alert-error hidden"></div>
+
+                <form id="empresa-form">
+                    <div class="form-group">
+                        <label class="form-label" for="emp-nome">Nome da Prefeitura</label>
+                        <input type="text" id="emp-nome" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="emp-cnpj">CNPJ</label>
+                        <input type="text" id="emp-cnpj" class="form-input" maxlength="18" placeholder="00.000.000/0000-00" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
+
+            <!-- Lista de Prefeituras -->
+            <div class="w-full">
+                <div class="card" style="max-width: 100%;">
+                    <h3 class="mb-4">Minhas Prefeituras</h3>
+                    <div style="overflow-x: auto;">
+                        <table id="empresas-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>CNPJ</th>
+                                    <th>Papel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populado via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Usuários (Apenas MASTER) -->
+        <div id="users-section" class="w-full mt-4 hidden">
+            <div class="card" style="max-width: 100%;">
+                <h3 class="mb-4">Usuários do Sistema</h3>
+                <div style="overflow-x: auto;">
+                    <table id="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>CPF</th>
+                                <th>Papel</th>
+                                <th>2FA Ativo?</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populado via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
