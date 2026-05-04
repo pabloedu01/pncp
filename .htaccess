@@ -1,0 +1,23 @@
+RewriteEngine On
+
+# Impede listagem de diretório
+Options -Indexes
+
+# Regra para a API (redireciona tudo que for /api para /api/index.php)
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+
+# Força HTTPs (opcional, remova o # se quiser forçar)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redireciona requests com .html para a URL limpa (esconde no navegador)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,NE,L]
+
+# Direciona requests limpos (sem .html) para o arquivo .html real nos bastidores
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]

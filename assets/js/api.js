@@ -27,7 +27,7 @@ const api = {
                 if (response.status === 401 && !endpoint.includes('auth')) {
                     // Token expired or invalid
                     localStorage.removeItem('token');
-                    window.location.href = '/index.html';
+                    window.location.href = '/';
                 }
                 throw new Error(data.error || 'Erro na requisição');
             }

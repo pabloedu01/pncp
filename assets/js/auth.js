@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Se já estiver logado, vai pro dashboard
     if (localStorage.getItem('token')) {
-        window.location.href = 'dashboard.html';
+        window.location.href = '/dashboard';
         return;
     }
 
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const data = await api.post('/auth/verify-2fa', { code, temp_token: tempToken });
             localStorage.setItem('token', data.token);
-            window.location.href = 'dashboard.html';
+            window.location.href = '/dashboard';
         } catch (error) {
             showAlert(error.message);
         }
